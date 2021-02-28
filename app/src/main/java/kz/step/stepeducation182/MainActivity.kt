@@ -14,8 +14,11 @@ class MainActivity : AppCompatActivity() {
 
 
     var button: Button? = null
+    var user: EditText? = null
+    var email: EditText? = null
+    var password: EditText? = null
+    var confirmPassword: EditText? = null
     var textView: TextView? = null
-    var edittext: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,29 +28,44 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun initializeViews() {
-        button = findViewById(R.id.button_main_activity_press)
-        textView = findViewById(R.id.textview_main_activity_text)
-        edittext = findViewById(R.id.textview_main_activity_edit)
+        button = findViewById(R.id.button_registration)
+        user = findViewById(R.id.edittext_user)
+        email = findViewById(R.id.field_email)
+        password = findViewById(R.id.field_password)
+        confirmPassword = findViewById(R.id.confirm_password)
+        textView = findViewById(R.id.textview)
     }
 
     @SuppressLint("SetTextI18n")
     fun initializeLiseners() {
-        val str = edittext?.text
-
+        val str1 = password?.text
+        val str2 = confirmPassword?.text
+        val name = user?.text
+        val email = email?.text
         button?.setOnClickListener {
-            val result: Boolean? = str?.any {
-                it.isDigit()
+
+            if (name != null) {
+                if(name.contains("[0-9a-zA-Z]")) {
+                    textView?.setText("Ваше имя не содержит либо буквы либо цифры")
+                }
+
             }
 
-            textView?.append("\n" + "$result")
-            if (result == true) {
-                textView?.setTextColor(Color.RED)
-                textView?.setText("“Error, we have digits in our name!")
-            } else {
-                textView?.setText("Everithing looks fine!")
+            if(name.isNullOrEmpty() || email.isNullOrEmpty())
+            {
+                textView?.setText("Ваше имя или email не заполнено!")
             }
+
+            if(str1 != str2)
+            {
+                textView?.setText("Ваши пароли не совпадают!")
+            }
+
+            else textView?.setText("Вы успешно зарегистрированы!")
 
         }
+
     }
+
 }
 
